@@ -442,8 +442,9 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
             
             NSString *mString = [longestString stringByReplacingOccurrencesOfString:@"[0-9-]" withString:@"N" options:NSRegularExpressionSearch range:NSMakeRange(0, [longestString length])];
             NSString *fullString = [NSString stringWithFormat:@"%@%@%@", prefix, mString, suffix];
-            self.YAxisLabelXOffset = [fullString sizeWithAttributes:attributes].width + 2;//MAX([maxValueString sizeWithAttributes:attributes].width + 10,
-                                     //    [minValueString sizeWithAttributes:attributes].width) + 5;
+            self.YAxisLabelXOffset = [fullString sizeWithAttributes:attributes].width + 8;
+            //MAX([maxValueString sizeWithAttributes:attributes].width + 10,
+            //    [minValueString sizeWithAttributes:attributes].width) + 5;
         } else {
             NSString *longestString = [NSString stringWithFormat:@"%i", (int)self.frame.size.height];
             self.YAxisLabelXOffset = [longestString sizeWithAttributes:attributes].width + 5;
@@ -852,12 +853,12 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
     
     // Determine the horizontal translation to perform on the far left and far right labels
     // This property is negated when calculating the position of reference frames
-    CGFloat horizontalTranslation;
-    if (index == 0) {
-        horizontalTranslation = lRect.size.width/2;
-    } else if (index+1 == numberOfPoints) {
-        horizontalTranslation = -lRect.size.width/2;
-    } else horizontalTranslation = 0;
+    CGFloat horizontalTranslation = 0;
+//    if (index == 0) {
+//        horizontalTranslation = lRect.size.width/2;
+//    } else if (index+1 == numberOfPoints) {
+//        horizontalTranslation = -lRect.size.width/2;
+//    } else horizontalTranslation = 0;
     xAxisHorizontalFringeNegationValue = horizontalTranslation;
     
     // Determine the final x-axis position
@@ -905,7 +906,7 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
         frameForBackgroundYAxis = CGRectMake(0, 0, self.YAxisLabelXOffset, self.frame.size.height);
         frameForLabelYAxis = CGRectMake(0, 0, self.YAxisLabelXOffset - 5, 15);
         xValueForCenterLabelYAxis = self.YAxisLabelXOffset/2;
-        textAlignmentForLabelYAxis = NSTextAlignmentRight;
+        textAlignmentForLabelYAxis = NSTextAlignmentLeft;
     }
     
     UIView *backgroundYaxis = [[UIView alloc] initWithFrame:frameForBackgroundYAxis];
@@ -1319,7 +1320,7 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
     self.touchInputLine.alpha = self.alphaTouchInputLine;
     
     closestDot = [self closestDotFromtouchInputLine:self.touchInputLine];
-    closestDot.alpha = 0.8;
+    closestDot.alpha = 1.0;
     
     
     if (self.enablePopUpReport == YES && closestDot.tag >= DotFirstTag100 && closestDot.tag < DotLastTag1000 && [closestDot isKindOfClass:[BEMCircle class]] && self.alwaysDisplayPopUpLabels == NO) {
@@ -1387,7 +1388,7 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
     self.yCenterLabel = closestDot.center.y - closestDot.frame.size.height/2 - 15;
     self.popUpView.center = CGPointMake(self.xCenterLabel, self.yCenterLabel);
 
-    self.popUpView.alpha = 1.0;
+    self.popUpView.alpha = 0.7;
     
     CGPoint popUpViewCenter = CGPointZero;
     
